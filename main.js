@@ -103,13 +103,13 @@ function toggleAsideShoppingCart(){
 }
 
  // funcion para renderizar el product detail 
-function openProductDetailAside(){
+function openProductDetailAside(name){
     // si estuviera activo el asideShoppingCart, lo oculto 
     asideShoppingCart.classList.add('inactive');
     
     productDetailContainer.classList.remove('inactive');
     
-
+    console.log(name);
 }
 
 // funcion para cerrar el product detail aside 
@@ -148,7 +148,7 @@ function closeProductDetailContainer(){
             productImg.setAttribute('src',product.img);
 
             // creamos un evento al clickear en la imagen para abrir el detalle
-            productImg.addEventListener('click',openProductDetailAside);
+            productImg.onclick = () => openProductDetailAside(product);
     
              // creamos el div
              const productInfo = document.createElement('div');
