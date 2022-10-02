@@ -188,13 +188,13 @@ productList.push({
 productList.push({
     name: 'PC',
     price: 1400,
-    img:"https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    img:"https://m.media-amazon.com/images/I/91LSF1iZUFL._AC_SY355_.jpg"
 });
 
 productList.push({
     name: 'Smart TV',
     price: 12000,
-    img:"https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    img:"	https://images.fravega.com/f300/ee52763a92e4568d20237c062870c869.jpg.webp"
 });
 
 ////////////// RENDERIZADO DE PRODUCTOS ///////////////// 
@@ -217,7 +217,7 @@ function renderProduct(product){
     <div class="product-detail-close">
         <img src="./icons/icon_close.png" alt="close">
     </div>
-        <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="bike">
+        <img src="${product.img}" alt="${product.name}">
     <div class="product-info">
         <p>$ ${product.price}</p>
         <p>${product.name}</p>
