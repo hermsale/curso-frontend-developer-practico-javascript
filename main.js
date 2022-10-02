@@ -25,7 +25,7 @@ const asideShoppingCart = document.querySelector('#shopping-cart');
 const cardsContainer = document.querySelector('.cards-container');
 
 /// contenedor que muestra el aside product detail ///////////////////////////////////////////
- const productDetailContainer = document.querySelector('#product-detail');
+//  const productDetailContainer = document.querySelector('#product-detail');
 //  boton para cerrar el product detail
  const buttonProductDetailContainer = document.querySelector('.product-detail-close');
 
@@ -40,7 +40,7 @@ burgerIcon.addEventListener('click',toggleMobileMenu);
 shoppingCart.addEventListener('click',toggleAsideShoppingCart);
 
 // boton para cerrar el product detail container
-buttonProductDetailContainer.addEventListener('click',closeProductDetailContainer);
+// buttonProductDetailContainer.addEventListener('click',closeProductDetailContainer);
 
 /////////////////////////// FUNCIONES /////////////////////////
 
@@ -64,7 +64,7 @@ function toggleMobileMenu(){
         asideShoppingCart.classList.toggle('inactive');
     }
 
-    productDetailContainer.classList.add('inactive');
+    // productDetailContainer.classList.add('inactive');
 }
 
 // aside shopping cart 
@@ -85,11 +85,6 @@ function toggleAsideShoppingCart(){
     // si estuviera activo el desktopMenu, lo oculto 
     desktopMenu.classList.add('inactive');
 
-    // si esta abierto el product detail container, lo cierro 
-    if(!productDetailContainer.classList.contains('inactive')){
-        productDetailContainer.classList.add('inactive');
-    }
-
     // pruebas con metodos classList ///////////////
     // enumera la cantidad de clases 
     console.log(mobileMenu.classList.length);
@@ -103,95 +98,79 @@ function toggleAsideShoppingCart(){
 }
 
  // funcion para renderizar el product detail 
-function openProductDetailAside(name){
+function openProductDetailAside(productDetail){
     // si estuviera activo el asideShoppingCart, lo oculto 
     asideShoppingCart.classList.add('inactive');
     
-    productDetailContainer.classList.remove('inactive');
+    console.log(productDetail);
     
-    console.log(name);
+    // enviamos informacion a la funcion de renderizado de product-detail
+    // asideProductDetailContainer.classList.remove('inactive');
+    renderProduct(productDetail);
 }
 
 // funcion para cerrar el product detail aside 
-function closeProductDetailContainer(){
-    productDetailContainer.classList.add('inactive');
-}
 
 
-    // ejemplo de elemento que recreamos desde JS
-    // 1)  <div class="product-card">
-    //     <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">
-    //     <div class="product-info">
-    //       <div>
-    //         <p>$120,00</p>
-    //         <p>Bike</p>
-    //       </div>
-    //       <figure>
-    //         <img src="./icons/bt_add_to_cart.svg" alt="">
-    //       </figure>
-    //     </div>
-    //   </div> 
-
- // encapsulamos eel codigo en una function, como buena practica - es practico para reutilizar en otros arrays tambien
-    // o eventualmente podemos cargarla o deshabilitar por medio de una interfaz de boton por ejemplo 
     // CREACION DEL ELEMENTO CON EL DOM  y CARGA DE INTERFAZ
-    function renderProducts(arr){
-        for(product of arr){
-            // creamos el div
-            const productCard = document.createElement('div');
-            // le agregamos la clase al Elemento
-            productCard.classList.add('product-card');
+function renderProducts(arr){
+                
+            arr.map(product =>{
+                const productCard = document.createElement('div');
+                // le agregamos la clase al Elemento
+                productCard.classList.add('product-card');
+        
+                // creamos un elemento img
+                const productImg = document.createElement('img');
+                // modificamos el atributo src, por medio de setAttribute 
+                productImg.setAttribute('src',product.img);
     
-            // creamos un elemento img
-            const productImg = document.createElement('img');
-            // modificamos el atributo src, por medio de setAttribute 
-            productImg.setAttribute('src',product.img);
+                // creamos un evento al clickear en la imagen para abrir el detalle
+                productImg.onclick = () => openProductDetailAside(product);
+        
+                 // creamos el div
+                 const productInfo = document.createElement('div');
+                 // le agregamos la clase al Elemento
+                 productInfo.classList.add('product-info');
+        
+                 const productInfoDiv = document.createElement('div');
+        
+                //  parrafo que contendra el precio 
+                 const productPrice = document.createElement('p');
+        
+                // incertamos el precio
+                productPrice.innerText = '$'+product.price;
+        
+                // parrafo que contendra el nombre 
+                const productName = document.createElement('p');
+                // incertamos el nombre 
+                productName.innerText = product.name;
+        
+                // colocamos dentro del div los dos parrafos 
+                productInfoDiv.appendChild(productPrice);
+                productInfoDiv.appendChild(productName);
+        
+                const productInfoFigure = document.createElement('figure');
+        
+                const productImgCart = document.createElement('img');
+                productImgCart.setAttribute('src','./icons/bt_add_to_cart.svg');
+        
+                // metemos dentro de la etiqueta figure, el productInfoFigure
+                productInfoFigure.appendChild(productImgCart);
+        
+                // agregamos a productInfo los dos bloques productInfo y el figure 
+                productInfo.appendChild(productInfoDiv);
+                productInfo.appendChild(productInfoFigure);
+        
+                // agregamos a productCard los bloques 
+                productCard.appendChild(productImg);
+                productCard.appendChild(productInfo);
+        
+                // agregamos al cards Product el producto
+        
+                cardsContainer.appendChild(productCard);
+            })
 
-            // creamos un evento al clickear en la imagen para abrir el detalle
-            productImg.onclick = () => openProductDetailAside(product);
-    
-             // creamos el div
-             const productInfo = document.createElement('div');
-             // le agregamos la clase al Elemento
-             productInfo.classList.add('product-info');
-    
-             const productInfoDiv = document.createElement('div');
-    
-            //  parrafo que contendra el precio 
-             const productPrice = document.createElement('p');
-    
-            // incertamos el precio
-            productPrice.innerText = '$'+product.price;
-    
-            // parrafo que contendra el nombre 
-            const productName = document.createElement('p');
-            // incertamos el nombre 
-            productName.innerText = product.name;
-    
-            // colocamos dentro del div los dos parrafos 
-            productInfoDiv.appendChild(productPrice);
-            productInfoDiv.appendChild(productName);
-    
-            const productInfoFigure = document.createElement('figure');
-    
-            const productImgCart = document.createElement('img');
-            productImgCart.setAttribute('src','./icons/bt_add_to_cart.svg');
-    
-            // metemos dentro de la etiqueta figure, el productInfoFigure
-            productInfoFigure.appendChild(productImgCart);
-    
-            // agregamos a productInfo los dos bloques productInfo y el figure 
-            productInfo.appendChild(productInfoDiv);
-            productInfo.appendChild(productInfoFigure);
-    
-            // agregamos a productCard los bloques 
-            productCard.appendChild(productImg);
-            productCard.appendChild(productInfo);
-    
-            // agregamos al cards Product el producto
-    
-            cardsContainer.appendChild(productCard);
-        }
     }
 
 ///////////// AGREGAMOS MANUALMENTE PRODUCTOS AL ARRAY ////////////////
@@ -218,36 +197,49 @@ productList.push({
     img:"https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
 });
 
-   
-// nos da el elemento del array 
-
-// guardamos en obProduct la transformacion del objeto a un array 
-const objProduct = Object.entries(productList);
-for(let i=0; i< objProduct.length; i++){
-// objProduct.forEach(element => {
-    if(i==1){
-
-        console.log(objProduct[i]);
-        console.log(productList[i].name);
-        console.log(productList[i].price);
-        console.log(productList[i].img);
-    }
-// });
-    // console.log(product.img);
-}
-
-// nos da el indice 
-// for(product in productList){
-//     console.log(product);
-// }
-
-
-
 ////////////// RENDERIZADO DE PRODUCTOS ///////////////// 
 renderProducts(productList);
 
+function renderProduct(product){
+    const mainContainerDetail = document.querySelector('.main-product-detail');
+    const asideProductDetailContainer = document.createElement('aside');
+    // if(mainContainerDetail.classList.contains('inactive')){
+    //     mainContainerDetail.classList.remove('inactive');
+    // }
+    // console.log(product);
+    // asideProductDetailContainer.className = 'asideProductDetailContainer';
+    // productDetailClose.classList.add = 'inactive';
+    asideProductDetailContainer.setAttribute('id','product-detail')
 
-// console.log(Object.keys(productList));
+
+    // asideProductDetailContainer.className = "inactive";
+    asideProductDetailContainer.innerHTML = `
+    <div class="product-detail-close">
+        <img src="./icons/icon_close.png" alt="close">
+    </div>
+        <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="bike">
+    <div class="product-info">
+        <p>$ ${product.price}</p>
+        <p>${product.name}</p>
+        <p>With its practical position, this bike also fulfills a decorative function, add your hall or workspace.</p>
+        <button class="primary-button add-to-cart-button">
+            <img src="./icons/bt_add_to_cart.svg" alt="add to cart">
+            Add to cart
+        </button>
+    </div>
+    `;
+
+    mainContainerDetail.appendChild(asideProductDetailContainer);
+    const productDetailClose = document.querySelector('.product-detail-close');
+    productDetailClose.addEventListener('click',closeProductDetailContainer);
+}
+
+// revisar boton de cierre productdetailcontainer 
+function closeProductDetailContainer(){
+    
+    const mainContainerDetail = document.querySelector('.main-product-detail');
+    mainContainerDetail.innerHTML = '';
+}
 
 /////////////////// ESTO HAY QUE RECREAR ///////////////////////////
 {/* <aside id="product-detail" class="inactive">
